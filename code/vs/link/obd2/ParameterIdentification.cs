@@ -290,6 +290,70 @@ namespace OBD2
             return values;
         }
 
+        protected String[] prepMarkedLines(String[] preppedLines)
+        {
+
+            String identifier = ":";
+
+            // determine if the array of strings contains any lines in the format "X: hh hh hh..."
+            bool linesAreMarked = false;
+            foreach (String line in preppedLines)
+            {
+                if (!string.IsNullOrEmpty(line) && line.Length > 2)
+                {
+                    if (line.Contains(identifier))
+                    {
+                        // line contains an identifier, assume all lines are marked
+                        linesAreMarked = true;
+                        break;
+                    }
+                }
+            }
+
+            // if the lines are marked, remove any that do not have an identifier,
+            // some bad elm adapters have buffer issues when receiving multiple lines
+            // and put a "no dtc reported" line first that is not marked with an identifier
+            if (linesAreMarked)
+            {
+                List<String> keptLines = new List<String>();
+                foreach (String line in preppedLines)
+                {
+                    if (line.Contains(identifier))
+                    {
+                        // only keep the line if it has an identifier
+                        keptLines.Add(line);
+                    }
+                }
+
+                // go through each kept line and put them together as a single line,
+                // this is because some adapters put bytes out of order with an odd number per line,
+                // but the values as a whole make sense and add up to the correct number of bytes
+                String finalLine = "";
+                foreach (String line in keptLines)
+                {
+
+                    // if the final line is not empty, meaning there are leading characters, then put a space so the parser can still separate them
+                    if (!string.IsNullOrEmpty(finalLine))
+                    {
+                        finalLine += " ";
+                    }
+
+                    int index = line.IndexOf(identifier);
+                    String subStr = line.Substring(index + 1);
+
+                    // the lines should already be in order, append to the final line in the order of the list
+                    finalLine += subStr.Trim();
+                }
+
+                return new String[] { finalLine.Trim() };
+            }
+            else
+            {
+                // lines are not marked, assume each line is in the format "43 <optional count> hh hh hh..."
+                return preppedLines;
+            }
+        }
+
         /// <summary>
         /// Evaluates the given string to a double.
         /// </summary>
@@ -316,7 +380,7 @@ namespace OBD2
             return returnValue;
         }
 
-        public virtual string SimulatedResponse()
+        public virtual string SimulatedResponse(Protocols.Protocol type)
         {
             // populate the string with valid info until the data packets, then fill with random data
             string dataStr = (this.Mode + 0x40).ToString("X2") + " ";
@@ -336,6 +400,15 @@ namespace OBD2
             for (int i = 0; i < this.DataByteCount; i++)
             {
                 dataStr += " " + ((byte)(DateTime.Now.Ticks + this.PID)).ToString("X2");
+            }
+
+
+            if (type == Protocols.Protocol.HighSpeedCAN11 ||
+                type == Protocols.Protocol.LowSpeedCAN11 ||
+                type == Protocols.Protocol.HighSpeedCAN29 ||
+                type == Protocols.Protocol.LowSpeedCAN29)
+            {
+                dataStr += " AA AA AA AA";
             }
 
             // purposely sleep to simulate the minimum cable transmission delay

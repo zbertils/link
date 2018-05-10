@@ -15,6 +15,7 @@ namespace OBD2.Cables
         protected OBD2.SpecificPids.Mode4 mode4 = new SpecificPids.Mode4();
         protected OBD2.SpecificPids.Mode7 mode7 = new SpecificPids.Mode7();
         protected OBD2.SpecificPids.Mode9 mode9 = new SpecificPids.Mode9();
+        protected OBD2.SpecificPids.ModeA modeA = new SpecificPids.ModeA();
         protected OBD2.SpecificPids.Mode19 mode19 = new SpecificPids.Mode19();
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace OBD2.Cables
             UpdateConnectionStatus(1, info, callback);
 
             // detect what type of cable is connected
-            string response = SendElmInitString(Protocols.Elm327.Reset, 1000);
+            string response = SendCommand(Protocols.Elm327.Reset, 1000);
             if (response.Contains(Protocols.Elm327.Header))
             {
                 Diagnostics.DiagnosticLogger.Log("Cable is ELM327 type");
@@ -72,7 +73,7 @@ namespace OBD2.Cables
                 info.Description = "Turning echo off";
                 UpdateConnectionStatus(1, info, callback);
 
-                response = SendElmInitString(Protocols.Elm327.EchoOff);
+                response = SendCommand(Protocols.Elm327.EchoOff);
                 if (!response.Contains(Protocols.Elm327.Responses.OK))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not turn echo off");
@@ -84,7 +85,7 @@ namespace OBD2.Cables
                 UpdateConnectionStatus(2, info, callback);
 
                 Diagnostics.DiagnosticLogger.Log("Turning auto protocol on");
-                response = SendElmInitString(Protocols.Elm327.SetAutoProtocol);
+                response = SendCommand(Protocols.Elm327.SetAutoProtocol);
                 if (!response.Contains(Protocols.Elm327.Responses.OK))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not set protocol to Auto");
@@ -95,7 +96,7 @@ namespace OBD2.Cables
                 UpdateConnectionStatus(2, info, callback);
 
                 Diagnostics.DiagnosticLogger.Log("Forcing a search for existing protocol");
-                response = SendElmInitString(Protocols.Elm327.ForceProtocolSearch, 3000);
+                response = SendCommand(Protocols.Elm327.ForceProtocolSearch, 3000);
                 if (string.IsNullOrEmpty(response))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not force an auto protocol search");
@@ -104,7 +105,7 @@ namespace OBD2.Cables
                     return;
                 }
 
-                response = SendElmInitString(Protocols.Elm327.DisplayProtocol);
+                response = SendCommand(Protocols.Elm327.DisplayProtocol);
                 string chosenProtocol = response.Replace(Protocols.Elm327.Responses.Auto, string.Empty).Replace(",", string.Empty).Trim();
                 Diagnostics.DiagnosticLogger.Log("Protocol chosen: " + chosenProtocol);
                 if (!response.Contains(Protocols.Elm327.Responses.Auto))
@@ -130,7 +131,7 @@ namespace OBD2.Cables
             }
         }
 
-        protected virtual string SendElmInitString(string data, int sleepMilliseconds = 500)
+        protected virtual string SendCommand(string data, int sleepMilliseconds = 500)
         {
             try
             {
@@ -158,12 +159,12 @@ namespace OBD2.Cables
             if (Protocol == Protocols.Protocol.J1850)
             {
                 // check if the header needs to be set
-                if (pid.Header != currentJ1850Header &&
+                if (//pid.Header != currentJ1850Header &&
                     !string.IsNullOrEmpty(pid.Header))
                 {
                     if (lastFrameHeader != pid.Header)
                     {
-                        string response = SendElmInitString(Protocols.Elm327.SetFrameHeader(pid.Header));
+                        string response = SendCommand(Protocols.Elm327.SetFrameHeader(pid.Header));
                         if (!response.Contains(Protocols.Elm327.Responses.OK))
                         {
                             Diagnostics.DiagnosticLogger.Log("Could not set frame header for PID" + System.Environment.NewLine + pid.ToString());
@@ -177,7 +178,7 @@ namespace OBD2.Cables
                 {
                     if (lastFrameHeader != Protocols.J1850.Headers.Default)
                     {
-                        string response = SendElmInitString(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default));
+                        string response = SendCommand(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default));
                         if (!response.Contains(Protocols.Elm327.Responses.OK))
                         {
                             Diagnostics.DiagnosticLogger.Log("Could not set default frame header for PID" + System.Environment.NewLine + pid.ToString());
@@ -237,7 +238,7 @@ namespace OBD2.Cables
                     response += cableConnection.ReadExisting();
                 }
 
-                if (response.Contains(Protocols.Elm327.Responses.Error) ||
+                if (response.Contains(Protocols.Elm327.Responses.NoData) ||
                     response.Contains(Protocols.Elm327.Responses.Searching) ||
                     response.Contains(Protocols.Elm327.Responses.Stopped))
                 {
@@ -272,10 +273,18 @@ namespace OBD2.Cables
             List<DiagnosticTroubleCode> codes = new List<DiagnosticTroubleCode>();
 
             // set the frame header to the default PCM for the main engine codes
-            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default);
+
+            //        SendCommand(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default), 1000);
+
+            // turn adaptive timing off so we can get all of the codes without missing them on slow responses
+            SendCommand(Protocols.Elm327.AdaptiveTimingOff, 1000);
 
             codes.AddRange(mode3.RequestTroubleCodes(this));
             codes.AddRange(mode7.RequestTroubleCodes(this));
+            codes.AddRange(modeA.RequestTroubleCodes(this));
+
+            // turn adaptive timing back on for pids
+            SendCommand(Protocols.Elm327.AdaptiveTimingOn, 1000);
 
             return codes;
         }

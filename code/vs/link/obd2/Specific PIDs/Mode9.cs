@@ -34,49 +34,72 @@ namespace OBD2.SpecificPids
             string[] dataLines = ParameterIdentification.PrepareResponseString(dataStr);
             string vin = string.Empty;
 
-            foreach (string line in dataLines)
+            try
             {
-                byte[] dataBytes = ParameterIdentification.ParseStringValues(line);
-                if (dataBytes.Length >= 7)
+                if (dataLines != null && dataLines.Length > 0)
                 {
-                    byte receivedMode = (byte)(dataBytes[0] - 0x40);
-                    if (receivedMode == this.Mode)
+                    dataLines = prepMarkedLines(dataLines);
+                    foreach (String line in dataLines)
                     {
-                        // first byte is the mode, second the pid, third the line number,
-                        // and fourth or index 3 is the start of vin data
-                        for (int i = 3; i < dataBytes.Length; i++)
+                        byte[] dataBytes = ParameterIdentification.ParseStringValues(line);
+                        if (dataBytes.Length >= 7)
                         {
-                            if (dataBytes[i] != 0)
+                            byte receivedMode = (byte)(dataBytes[0] - 0x40);
+                            if (receivedMode == this.Mode)
+                            {                                
+                                for (int i = 3; i < dataBytes.Length; i++)
+                                {
+                                    if (dataBytes[i] != 0)
+                                    {
+                                        vin += Convert.ToChar(dataBytes[i]);
+                                    }
+                                }
+                            }
+                            else
                             {
-                                vin += Convert.ToChar(dataBytes[i]);
+                                Diagnostics.DiagnosticLogger.Log("Cannot decode VIN, expected mode " + this.Mode + " and received " + receivedMode);
+                                return null;
                             }
                         }
-                    }
-                    else
-                    {
-                        Diagnostics.DiagnosticLogger.Log("Cannot decode VIN, expected mode " + this.Mode + " and received " + receivedMode);
-                        return null;
+                        else
+                        {
+                            Diagnostics.DiagnosticLogger.Log("Cannot decode VIN, expected at least 7 characters in line \"" + line + "\" and received " + dataBytes.Length);
+                            return null;
+                        }
                     }
                 }
-                else
-                {
-                    Diagnostics.DiagnosticLogger.Log("Cannot decode VIN, expected at least 7 characters in line \"" + line + "\" and received " + dataBytes.Length);
-                    return null;
-                }
+            }
+            catch (Exception ex)
+            {
+                Diagnostics.DiagnosticLogger.Log("Could not decode VIN, exception occurred", ex);
             }
 
             return vin;
         }
 
-        public override string SimulatedResponse()
+        public override string SimulatedResponse(Protocols.Protocol type)
         {
-            return
-                "49 02 01 00 00 00 31" + Protocols.Elm327.EndOfLine +
-                "49 02 02 47 43 48 4B" + Protocols.Elm327.EndOfLine +
-                "49 02 03 33 33 32 38" + Protocols.Elm327.EndOfLine +
-                "49 02 04 37 31 34 32" + Protocols.Elm327.EndOfLine +
-                "49 02 05 30 38 32 36" + Protocols.Elm327.EndOfLine +
-                Protocols.Elm327.Prompt;
+            if (type == Protocols.Protocol.J1850)
+            {
+
+                return
+                    "49 02 01 00 00 00 31" + Protocols.Elm327.EndOfLine +
+                    "49 02 02 47 43 48 4B" + Protocols.Elm327.EndOfLine +
+                    "49 02 03 33 33 32 38" + Protocols.Elm327.EndOfLine +
+                    "49 02 04 37 31 34 32" + Protocols.Elm327.EndOfLine +
+                    "49 02 05 30 38 32 36" + Protocols.Elm327.EndOfLine +
+                    Protocols.Elm327.Prompt;
+            }
+            else
+            {
+
+                return
+                    "014" + Protocols.Elm327.EndOfLine +
+                    "0: 49 02 01 31 47 43" + Protocols.Elm327.EndOfLine +
+                    "1: 48 4B 33 33 32 38 37" + Protocols.Elm327.EndOfLine +
+                    "2: 31 34 32 30 38 32 36" + Protocols.Elm327.EndOfLine +
+                    Protocols.Elm327.Prompt;
+            }
         }
     }
 }

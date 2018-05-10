@@ -25,6 +25,7 @@ namespace link.ui
             checkBoxSimulated.Checked = Properties.Settings.Default.SimulatedCable;
             checkBoxLog.Checked = Properties.Settings.Default.LogToFile;
             textBoxLogTo.Text = Properties.Settings.Default.LogToDirectory;
+            comboBoxProtocol.SelectedIndex = comboBoxProtocol.Items.IndexOf(Properties.Settings.Default.SimulatedProtocol);
         }
 
         private void checkBoxSaveSize_CheckedChanged(object sender, EventArgs e)
@@ -88,6 +89,11 @@ namespace link.ui
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
+        }
+
+        private void comboBoxProtocol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SimulatedProtocol = comboBoxProtocol.SelectedItem.ToString();
         }
     }
 }

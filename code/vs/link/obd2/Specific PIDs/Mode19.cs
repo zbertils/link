@@ -135,19 +135,36 @@ namespace OBD2.SpecificPids
             return Mode.ToString("X2") + PID.ToString("X2") + "FF00" + OBD2.Protocols.Elm327.EndOfLine;
         }
 
-        public override string SimulatedResponse()
+        public override string SimulatedResponse(Protocols.Protocol type)
         {
-            return
-                "59 A9 57 01" + Protocols.Elm327.EndOfLine +
-                "59 A9 58 01" + Protocols.Elm327.EndOfLine +
-                "59 B8 02 01" + Protocols.Elm327.EndOfLine +
-                "59 D0 16 11" + Protocols.Elm327.EndOfLine +
-                "59 A9 57 3F" + Protocols.Elm327.EndOfLine +
-                "59 A9 57 25" + Protocols.Elm327.EndOfLine +
-                "59 06 70 7F" + Protocols.Elm327.EndOfLine +
-                "59 04 01 3F" + Protocols.Elm327.EndOfLine +
-                "59 27 71 21" + Protocols.Elm327.EndOfLine +
-                "59 00 00 13" + Protocols.Elm327.EndOfLine + Protocols.Elm327.Prompt;
+            if (type == Protocols.Protocol.J1850)
+            {
+                return
+                    "59 A9 57 01" + Protocols.Elm327.EndOfLine +
+                    "59 A9 58 01" + Protocols.Elm327.EndOfLine +
+                    "59 B8 02 01" + Protocols.Elm327.EndOfLine +
+                    "59 D0 16 11" + Protocols.Elm327.EndOfLine +
+                    "59 A9 57 3F" + Protocols.Elm327.EndOfLine +
+                    "59 A9 57 25" + Protocols.Elm327.EndOfLine +
+                    "59 06 70 7F" + Protocols.Elm327.EndOfLine +
+                    "59 04 01 3F" + Protocols.Elm327.EndOfLine +
+                    "59 27 71 21" + Protocols.Elm327.EndOfLine +
+                    "59 00 00 13" + Protocols.Elm327.EndOfLine + Protocols.Elm327.Prompt;
+            }
+            else
+            {
+                return
+                    "0: 59 A9 57 01" + Protocols.Elm327.EndOfLine +
+                    "1:A9 58 01" + Protocols.Elm327.EndOfLine +
+                    "2: B8 02 01" + Protocols.Elm327.EndOfLine +
+                    "3: D0 16 11" + Protocols.Elm327.EndOfLine +
+                    "4: A9 57 3F" + Protocols.Elm327.EndOfLine +
+                    "5: A9 57 25" + Protocols.Elm327.EndOfLine +
+                    "6: 06 70 7F" + Protocols.Elm327.EndOfLine +
+                    "7:04 01 3F" + Protocols.Elm327.EndOfLine +
+                    "8: 27 71 21" + Protocols.Elm327.EndOfLine +
+                    "9: 00 00 13" + Protocols.Elm327.EndOfLine + Protocols.Elm327.Prompt;
+            }
         }
     }
 }

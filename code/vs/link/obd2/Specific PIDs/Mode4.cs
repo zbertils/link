@@ -23,7 +23,7 @@ namespace OBD2.SpecificPids
 
         public override byte PacketSize { get { return 0x01; } }
 
-        public override string SimulatedResponse()
+        public override string SimulatedResponse(Protocols.Protocol type)
         {
             return Protocols.Elm327.Prompt; // there is nothing to return
         }

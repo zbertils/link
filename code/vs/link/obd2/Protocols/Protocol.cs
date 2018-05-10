@@ -15,33 +15,49 @@ namespace OBD2
             None,
             Auto,
             J1850,
-            HighSpeedCAN,
-            LowSpeedCAN,
-            VPW
+            HighSpeedCAN11,
+            LowSpeedCAN11,
+            HighSpeedCAN29,
+            LowSpeedCAN29,
+            VPW,
+            Unknown
         }
 
-        public static Protocol NameToProtocol(string name)
+        public static Protocol NameToProtocol(String name)
         {
-            if (name.ToUpper().Contains("J1850"))
+            String upperName = name.ToUpper();
+            if (upperName.Contains("J1850"))
             {
                 return Protocol.J1850;
             }
-            else if (name.ToUpper().Contains("AUTO"))
+            else if (upperName.Contains("AUTO"))
             {
                 return Protocol.Auto;
             }
-            else if (name.ToUpper().Contains("CAN"))
+            else if (upperName.Contains("CAN"))
             {
-                if (name.ToUpper().Contains("HIGH"))
+                if (upperName.Contains("11/500"))
                 {
-                    return Protocol.HighSpeedCAN;
+                    return Protocol.HighSpeedCAN11;
+                }
+                else if (upperName.Contains("11/250"))
+                {
+                    return Protocol.LowSpeedCAN11;
+                }
+                else if (upperName.Contains("29/500"))
+                {
+                    return Protocol.HighSpeedCAN29;
+                }
+                else if (upperName.Contains("29/250"))
+                {
+                    return Protocol.LowSpeedCAN29;
                 }
                 else
                 {
-                    return Protocol.LowSpeedCAN;
+                    return Protocol.Unknown;
                 }
             }
-            else if (name.ToUpper().Contains("VPW"))
+            else if (upperName.Contains("VPW"))
             {
                 return Protocol.VPW;
             }
@@ -91,16 +107,40 @@ namespace OBD2
 
         }
 
+        public static class CAN
+        {
+            public static class Headers
+            {
+
+                public static class Destinations
+                {
+                    public const String OffBoardCable = "D";
+                }
+
+                public static class Sources
+                {
+                    public const String PCM = "8";
+                    public const String All = "F";
+                }
+
+                public const String Default = "7" + Destinations.OffBoardCable + Sources.All;
+            }
+        }
+
         public static class Elm327
         {
 
-            public const string Header = "ELM327";
-            public const string Reset = "AT Z";
-            public const string DisplayProtocol = "AT DP";
-            public const string SetAutoProtocol = "AT SP 0";
-            public const string EchoOff = "AT E0";
-            public const string EchoOn = "AT E1";
-            public const string Prompt = ">";
+            public const String Header = "ELM327";
+            public const String Reset = "AT Z";
+            public const String DisplayProtocol = "AT DP";
+            public const String SetAutoProtocol = "AT SP 0";
+            public const String SetTimeoutMaximum = "AT ST FF";
+            public const String SetSpacesOff = "AT S0";
+            public const String EchoOff = "AT E0";
+            public const String EchoOn = "AT E1";
+            public const String AdaptiveTimingOn = "AT AT1";
+            public const String AdaptiveTimingOff = "AT AT0";
+            public const String Prompt = ">";
 
             /// <summary>
             /// The command for setting the frame header. This string needs to be given the 3-byte frame header value, e.g. "6C 10 F1" or a value from Protocols.J1850.Headers.
@@ -123,7 +163,7 @@ namespace OBD2
             {
                 public const string Auto = "AUTO";
                 public const string OK = "OK";
-                public const string Error = "NO DATA";
+                public const string NoData = "NO DATA";
                 public const string EndOfLine = "\r";
                 public const string Searching = "SEARCHING...";
                 public const string Stopped = "STOPPED";

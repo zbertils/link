@@ -23,11 +23,19 @@ namespace OBD2.SpecificPids
 
         public override byte PacketSize { get { return 0x01; } }
 
-        public override string SimulatedResponse()
+        public override string SimulatedResponse(Protocols.Protocol type)
         {
-            // this simulation is for ISO based protocols only, CAN may or may not
-            // have an extra byte after the mode describing how many codes there are
-            return "4A 06 70" + Protocols.Elm327.EndOfLine + Protocols.Elm327.Prompt;
+            if (type == Protocols.Protocol.J1850)
+            {
+                // this simulation is for ISO based protocols only, CAN may or may not
+                // have an extra byte after the mode describing how many codes there are
+                return "4A 06 70" + Protocols.Elm327.EndOfLine + Protocols.Elm327.Prompt;
+            }
+            else
+            {
+                // for CAN related protocols
+                return "4A 01 06 70 AA AA AA AA" + Protocols.Elm327.EndOfLine + Protocols.Elm327.Prompt;
+            }
         }
     }
 }

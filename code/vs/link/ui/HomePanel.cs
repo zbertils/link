@@ -139,7 +139,7 @@ namespace link.ui
 
             if (Properties.Settings.Default.SimulatedCable)
             {
-                Globals.cable = new OBD2.Cables.Elm327CableSimulator("COM16", 3000, UpdateConnectionStatus);
+                Globals.cable = new OBD2.Cables.Elm327CableSimulator("COM16", 3000, UpdateConnectionStatus, Properties.Settings.Default.SimulatedProtocol);
             }
             else
             {
@@ -212,6 +212,7 @@ namespace link.ui
                 System.Threading.Thread.Sleep(500); // give the data panel some time to close its worker
 
                 Globals.cable.Close();
+                Globals.vehicle = null;
             }
 
             SetupConnectState(); // setup the button to be ready to connect no matter what

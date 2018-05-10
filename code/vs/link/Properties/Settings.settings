@@ -23,5 +23,8 @@
     <Setting Name="LogToDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\temp\link</Value>
     </Setting>
+    <Setting Name="SimulatedProtocol" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SAE J1850 (GM)</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

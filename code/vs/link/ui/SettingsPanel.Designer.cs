@@ -30,22 +30,23 @@
         {
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.groupBoxLogging = new System.Windows.Forms.GroupBox();
+            this.textBoxLogTo = new System.Windows.Forms.TextBox();
+            this.labelSaveTo = new System.Windows.Forms.Label();
+            this.checkBoxLog = new System.Windows.Forms.CheckBox();
             this.groupBoxLayout = new System.Windows.Forms.GroupBox();
             this.checkBoxSaveLocation = new System.Windows.Forms.CheckBox();
             this.checkBoxSaveSize = new System.Windows.Forms.CheckBox();
             this.tabPageAdvanced = new System.Windows.Forms.TabPage();
             this.groupBoxDebug = new System.Windows.Forms.GroupBox();
+            this.comboBoxProtocol = new System.Windows.Forms.ComboBox();
             this.checkBoxSimulated = new System.Windows.Forms.CheckBox();
-            this.groupBoxLogging = new System.Windows.Forms.GroupBox();
-            this.checkBoxLog = new System.Windows.Forms.CheckBox();
-            this.labelSaveTo = new System.Windows.Forms.Label();
-            this.textBoxLogTo = new System.Windows.Forms.TextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
+            this.groupBoxLogging.SuspendLayout();
             this.groupBoxLayout.SuspendLayout();
             this.tabPageAdvanced.SuspendLayout();
             this.groupBoxDebug.SuspendLayout();
-            this.groupBoxLogging.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlSettings
@@ -72,6 +73,51 @@
             this.tabPageGeneral.TabIndex = 0;
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxLogging
+            // 
+            this.groupBoxLogging.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxLogging.Controls.Add(this.textBoxLogTo);
+            this.groupBoxLogging.Controls.Add(this.labelSaveTo);
+            this.groupBoxLogging.Controls.Add(this.checkBoxLog);
+            this.groupBoxLogging.Location = new System.Drawing.Point(6, 83);
+            this.groupBoxLogging.Name = "groupBoxLogging";
+            this.groupBoxLogging.Size = new System.Drawing.Size(502, 71);
+            this.groupBoxLogging.TabIndex = 1;
+            this.groupBoxLogging.TabStop = false;
+            this.groupBoxLogging.Text = "Logging";
+            // 
+            // textBoxLogTo
+            // 
+            this.textBoxLogTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxLogTo.Location = new System.Drawing.Point(78, 42);
+            this.textBoxLogTo.Name = "textBoxLogTo";
+            this.textBoxLogTo.Size = new System.Drawing.Size(418, 20);
+            this.textBoxLogTo.TabIndex = 2;
+            this.textBoxLogTo.Text = "C:\\temp\\";
+            this.textBoxLogTo.TextChanged += new System.EventHandler(this.textBoxSaveLogsTo_TextChanged);
+            // 
+            // labelSaveTo
+            // 
+            this.labelSaveTo.AutoSize = true;
+            this.labelSaveTo.Location = new System.Drawing.Point(6, 45);
+            this.labelSaveTo.Name = "labelSaveTo";
+            this.labelSaveTo.Size = new System.Drawing.Size(66, 13);
+            this.labelSaveTo.TabIndex = 1;
+            this.labelSaveTo.Text = "Save logs to";
+            // 
+            // checkBoxLog
+            // 
+            this.checkBoxLog.AutoSize = true;
+            this.checkBoxLog.Location = new System.Drawing.Point(6, 20);
+            this.checkBoxLog.Name = "checkBoxLog";
+            this.checkBoxLog.Size = new System.Drawing.Size(168, 17);
+            this.checkBoxLog.TabIndex = 0;
+            this.checkBoxLog.Text = "Start logging when connected";
+            this.checkBoxLog.UseVisualStyleBackColor = true;
+            this.checkBoxLog.CheckedChanged += new System.EventHandler(this.checkBoxLog_CheckedChanged);
             // 
             // groupBoxLayout
             // 
@@ -123,6 +169,7 @@
             // 
             this.groupBoxDebug.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxDebug.Controls.Add(this.comboBoxProtocol);
             this.groupBoxDebug.Controls.Add(this.checkBoxSimulated);
             this.groupBoxDebug.Location = new System.Drawing.Point(6, 6);
             this.groupBoxDebug.Name = "groupBoxDebug";
@@ -130,6 +177,23 @@
             this.groupBoxDebug.TabIndex = 1;
             this.groupBoxDebug.TabStop = false;
             this.groupBoxDebug.Text = "Debug";
+            // 
+            // comboBoxProtocol
+            // 
+            this.comboBoxProtocol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProtocol.FormattingEnabled = true;
+            this.comboBoxProtocol.Items.AddRange(new object[] {
+            "SAE J1850 VPW (GM)",
+            "SAE J1850 PWM (Ford)",
+            "ISO 15765-4 CAN (11/500)",
+            "ISO 15765-4 CAN (29/500)",
+            "ISO 15765-4 CAN (11/250)",
+            "ISO 15765-4 CAN (29/250)"});
+            this.comboBoxProtocol.Location = new System.Drawing.Point(176, 16);
+            this.comboBoxProtocol.Name = "comboBoxProtocol";
+            this.comboBoxProtocol.Size = new System.Drawing.Size(184, 21);
+            this.comboBoxProtocol.TabIndex = 1;
+            this.comboBoxProtocol.SelectedIndexChanged += new System.EventHandler(this.comboBoxProtocol_SelectedIndexChanged);
             // 
             // checkBoxSimulated
             // 
@@ -142,51 +206,6 @@
             this.checkBoxSimulated.UseVisualStyleBackColor = true;
             this.checkBoxSimulated.CheckedChanged += new System.EventHandler(this.checkBoxSimulated_CheckedChanged);
             // 
-            // groupBoxLogging
-            // 
-            this.groupBoxLogging.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxLogging.Controls.Add(this.textBoxLogTo);
-            this.groupBoxLogging.Controls.Add(this.labelSaveTo);
-            this.groupBoxLogging.Controls.Add(this.checkBoxLog);
-            this.groupBoxLogging.Location = new System.Drawing.Point(6, 83);
-            this.groupBoxLogging.Name = "groupBoxLogging";
-            this.groupBoxLogging.Size = new System.Drawing.Size(502, 71);
-            this.groupBoxLogging.TabIndex = 1;
-            this.groupBoxLogging.TabStop = false;
-            this.groupBoxLogging.Text = "Logging";
-            // 
-            // checkBoxLog
-            // 
-            this.checkBoxLog.AutoSize = true;
-            this.checkBoxLog.Location = new System.Drawing.Point(6, 20);
-            this.checkBoxLog.Name = "checkBoxLog";
-            this.checkBoxLog.Size = new System.Drawing.Size(168, 17);
-            this.checkBoxLog.TabIndex = 0;
-            this.checkBoxLog.Text = "Start logging when connected";
-            this.checkBoxLog.UseVisualStyleBackColor = true;
-            this.checkBoxLog.CheckedChanged += new System.EventHandler(this.checkBoxLog_CheckedChanged);
-            // 
-            // labelSaveTo
-            // 
-            this.labelSaveTo.AutoSize = true;
-            this.labelSaveTo.Location = new System.Drawing.Point(6, 45);
-            this.labelSaveTo.Name = "labelSaveTo";
-            this.labelSaveTo.Size = new System.Drawing.Size(66, 13);
-            this.labelSaveTo.TabIndex = 1;
-            this.labelSaveTo.Text = "Save logs to";
-            // 
-            // textBoxLogTo
-            // 
-            this.textBoxLogTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLogTo.Location = new System.Drawing.Point(78, 42);
-            this.textBoxLogTo.Name = "textBoxLogTo";
-            this.textBoxLogTo.Size = new System.Drawing.Size(418, 20);
-            this.textBoxLogTo.TabIndex = 2;
-            this.textBoxLogTo.Text = "C:\\temp\\";
-            this.textBoxLogTo.TextChanged += new System.EventHandler(this.textBoxSaveLogsTo_TextChanged);
-            // 
             // SettingsPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -197,13 +216,13 @@
             this.Load += new System.EventHandler(this.SettingsPanel_Load);
             this.tabControlSettings.ResumeLayout(false);
             this.tabPageGeneral.ResumeLayout(false);
+            this.groupBoxLogging.ResumeLayout(false);
+            this.groupBoxLogging.PerformLayout();
             this.groupBoxLayout.ResumeLayout(false);
             this.groupBoxLayout.PerformLayout();
             this.tabPageAdvanced.ResumeLayout(false);
             this.groupBoxDebug.ResumeLayout(false);
             this.groupBoxDebug.PerformLayout();
-            this.groupBoxLogging.ResumeLayout(false);
-            this.groupBoxLogging.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -222,6 +241,6 @@
         private System.Windows.Forms.CheckBox checkBoxLog;
         private System.Windows.Forms.TextBox textBoxLogTo;
         private System.Windows.Forms.Label labelSaveTo;
-
+        private System.Windows.Forms.ComboBox comboBoxProtocol;
     }
 }

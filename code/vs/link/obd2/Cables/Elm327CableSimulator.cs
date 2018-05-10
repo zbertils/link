@@ -22,7 +22,7 @@ namespace OBD2.Cables
         /// </summary>
         /// <param name="port"> The port the cable is connected to. </param>
         /// <param name="timeoutMilliseconds"> The timeout to use for communication with the cable. </param>
-        public Elm327CableSimulator(string port, int timeoutMilliseconds, Elm327Cable.ConnectionCallback callback) :
+        public Elm327CableSimulator(string port, int timeoutMilliseconds, Elm327Cable.ConnectionCallback callback, string protocol = "J1850") :
             base()
         {
             CableType = Type.Simulated;
@@ -91,7 +91,8 @@ namespace OBD2.Cables
                     return;
                 }
 
-                response = "AUTO,J1850";
+                //response = "AUTO,J1850";
+                response = "AUTO," + protocol;//ISO 15765 -4 CAN (11/500)";
                 string chosenProtocol = response.Replace(Protocols.Elm327.Responses.Auto, string.Empty).Replace(",", string.Empty).Trim();
                 Diagnostics.DiagnosticLogger.Log("Protocol chosen: " + chosenProtocol);
                 if (!response.Contains(Protocols.Elm327.Responses.Auto))
@@ -117,7 +118,7 @@ namespace OBD2.Cables
             }
         }
 
-        protected override string SendElmInitString(string data, int sleepMilliseconds = 500)
+        protected override string SendCommand(string data, int sleepMilliseconds = 500)
         {
             return Protocols.Elm327.Responses.OK;
         }
@@ -128,7 +129,7 @@ namespace OBD2.Cables
             if (pid.Header != currentJ1850Header &&
                 !string.IsNullOrEmpty(pid.Header))
             {
-                string response = SendElmInitString(Protocols.Elm327.SetFrameHeader(pid.Header));
+                string response = SendCommand(Protocols.Elm327.SetFrameHeader(pid.Header));
                 if (!response.Contains(Protocols.Elm327.Responses.OK))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not set frame header for PID" + System.Environment.NewLine + pid.ToString());
@@ -137,7 +138,7 @@ namespace OBD2.Cables
             }
             else if (string.IsNullOrEmpty(pid.Header))
             {
-                string response = SendElmInitString(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default));
+                string response = SendCommand(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default));
                 if (!response.Contains(Protocols.Elm327.Responses.OK))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not set default frame header for PID" + System.Environment.NewLine + pid.ToString());
@@ -145,7 +146,7 @@ namespace OBD2.Cables
                 }
             }
 
-            return pid.SimulatedResponse();
+            return pid.SimulatedResponse(this.Protocol);
         }
 
         public override List<DiagnosticTroubleCode> RequestTroubleCodes()
