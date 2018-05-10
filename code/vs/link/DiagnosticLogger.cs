@@ -14,17 +14,17 @@ namespace Diagnostics
         private static BlockingCollection<string> messageQueue = new BlockingCollection<string>();
         private const int separationCharacterCount = 79; // the common margin column
         private const int messageQueueTimeout = 1000; // in milliseconds
-        private static string loggerFileName = "link.log";
+        private static string loggerFileName = System.IO.Path.GetTempPath() + "link.log";
 
 
         /// <summary>
         /// Starts the logging thread for the application.
         /// </summary>
         /// <param name="fileName"> The optional file name to give to the log file. </param>
-        public static void StartLogging(string fileName = @"C:\temp\link.log")
+        public static void StartLogging(string fileName = null)
         {
             isAlive = true;
-            loggerFileName = fileName;
+            loggerFileName = fileName ?? System.IO.Path.GetTempPath() + "link.log";
             loggingThread.Start();
         }
 
@@ -91,8 +91,7 @@ namespace Diagnostics
         private static void LoggingWorker()
         {
             // open the logging file
-            string applicationDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            System.IO.StreamWriter logFile = new System.IO.StreamWriter(System.IO.Path.Combine(applicationDirectory, loggerFileName), true);
+            System.IO.StreamWriter logFile = new System.IO.StreamWriter(loggerFileName, true);
 
             // while logging is alive and should continue
             while (isAlive)
