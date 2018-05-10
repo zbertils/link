@@ -1,0 +1,636 @@
+<ArrayOfParameterIdentification xmlns="http://schemas.datacontract.org/2004/07/OBD2" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The calculated load on the engine.</Description>
+    <FormulaString>{0}*100.0/255.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Calculated Engine Load</Name>
+    <PID>4</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The engine coolant temperature in Celsius.</Description>
+    <FormulaString>({0}-40)*1.8+32</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Engine Coolant Temperature</Name>
+    <PID>5</PID>
+    <PidType>Generic</PidType>
+    <Units>Fahrenheit</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The short term fuel trim in percent of bank 1.</Description>
+    <FormulaString>({0}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percent Bank 1</Name>
+    <PID>6</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The long term fuel trim in percent of bank 1.</Description>
+    <FormulaString>({0}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Long Term Fuel Trim Percent Bank 1</Name>
+    <PID>7</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The short term fuel trim in percent of bank 2.</Description>
+    <FormulaString>({0}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percent Bank 2</Name>
+    <PID>8</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The long term fuel trim in percent of bank 2.</Description>
+    <FormulaString>({0}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Long Term Fuel Trim Percent Bank 2</Name>
+    <PID>9</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The fuel pressure in KPa.</Description>
+    <FormulaString>{0}*3</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Fuel Pressure</Name>
+    <PID>10</PID>
+    <PidType>Generic</PidType>
+    <Units>kPa</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The intake manifold pressure in kPa.</Description>
+    <FormulaString>{0}</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Intake Manifold Pressure</Name>
+    <PID>11</PID>
+    <PidType>Generic</PidType>
+    <Units>kPa</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>The engine RPM.</Description>
+    <FormulaString>(({0}*256.0)+{1})/4.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Engine RPM</Name>
+    <PID>12</PID>
+    <PidType>Generic</PidType>
+    <Units>RPM</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The vehicle speed in km/h.</Description>
+    <FormulaString>{0}*0.621371</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Vehicle Speed</Name>
+    <PID>13</PID>
+    <PidType>Generic</PidType>
+    <Units>mph</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>Degrees advance relative to cylinder 1.</Description>
+    <FormulaString>{0}/2.0-64.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Timing Advance</Name>
+    <PID>14</PID>
+    <PidType>Generic</PidType>
+    <Units>Degrees</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>Temperature of the air intake in Celsius.</Description>
+    <FormulaString>({0}-40)*1.8+32</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Intake Air Temperature</Name>
+    <PID>15</PID>
+    <PidType>Generic</PidType>
+    <Units>Fahrenheit</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>The MAF air flow rate in grams per second.</Description>
+    <FormulaString>(({0}*256.0)+{1})/100.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>MAF Air Flow Rate</Name>
+    <PID>16</PID>
+    <PidType>Generic</PidType>
+    <Units>grams/sec</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The position of the throttle in percent.</Description>
+    <FormulaString>{0}*100.0/255.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Throttle Position</Name>
+    <PID>17</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 1, Bank 1</Name>
+    <PID>20</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 1, Bank 1</Name>
+    <PID>20</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 2, Bank 1</Name>
+    <PID>21</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 2, Bank 1</Name>
+    <PID>21</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 3, Bank 1</Name>
+    <PID>22</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 3, Bank 1</Name>
+    <PID>22</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 4, Bank 1</Name>
+    <PID>23</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 4, Bank 1</Name>
+    <PID>23</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 1, Bank 2</Name>
+    <PID>24</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 1, Bank 2</Name>
+    <PID>24</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 2, Bank 2</Name>
+    <PID>25</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 2, Bank 2</Name>
+    <PID>25</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 3, Bank 2</Name>
+    <PID>26</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 3, Bank 2</Name>
+    <PID>26</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim voltage.</Description>
+    <FormulaString>{0}/200</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Voltage, Sensor 4, Bank 2</Name>
+    <PID>27</PID>
+    <PidType>Generic</PidType>
+    <Units>V</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Short term fuel trim percentage. If equal to 99.21875 then it is not used.</Description>
+    <FormulaString>({1}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Short Term Fuel Trim Percentage, Sensor 4, Bank 2</Name>
+    <PID>27</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>Power Take Off, Zero if not active.</Description>
+    <FormulaString>{0}</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Auxilary Input Status</Name>
+    <PID>30</PID>
+    <PidType>Generic</PidType>
+    <Units>Absolute</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>The run time since the engine was started, in seconds.</Description>
+    <FormulaString>({0}*256)+{1}</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Run Time Since Engine Start</Name>
+    <PID>31</PID>
+    <PidType>Generic</PidType>
+    <Units>sec</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>The distance traveled with the malfunction indicator lamp (MIL) on, in Kilometers.</Description>
+    <FormulaString>(({0}*256)+{1})*0.621371</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Distance Traveled With MIL On</Name>
+    <PID>33</PID>
+    <PidType>Generic</PidType>
+    <Units>miles</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Fuel rail pressure relative to the manifest vacuum, in Kilopascals.</Description>
+    <FormulaString>(({0}*256)+{1})*0.079</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Fuel Rail Pressure, Manifold</Name>
+    <PID>34</PID>
+    <PidType>Generic</PidType>
+    <Units>kPa</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Fuel rail pressure.</Description>
+    <FormulaString>(({0}*256)+{1})*10</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Fuel Rail pressure</Name>
+    <PID>35</PID>
+    <PidType>Generic</PidType>
+    <Units>???</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The EGR command on, in percent.</Description>
+    <FormulaString>{0}/255.0*100.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Commanded EGR</Name>
+    <PID>44</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>EGR error in percent.</Description>
+    <FormulaString>({0}-128.0)*100.0/128.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>EGR Error</Name>
+    <PID>45</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The evaporative purge command on, in percent.</Description>
+    <FormulaString>{0}/255.0*100.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Commanded Evaporative Purge</Name>
+    <PID>46</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>The level of fuel.</Description>
+    <FormulaString>{0}/255.0*100.0</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Fuel Level Input</Name>
+    <PID>47</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>The fuel rate.</Description>
+    <FormulaString>(256*{0}+{1})/20</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>1</Mode>
+    <Name>Engine Fuel Rate</Name>
+    <PID>94</PID>
+    <PidType>Generic</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>Oil temperature, in Celcius.</Description>
+    <FormulaString>{0}-40</FormulaString>
+    <Group>Engine</Group>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Oil Temperature</Name>
+    <PID>4436</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>°C</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 1 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 1</Name>
+    <PID>5679</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 2 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 2</Name>
+    <PID>5680</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 3 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 3</Name>
+    <PID>5681</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 4 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 4</Name>
+    <PID>5682</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 5 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 5</Name>
+    <PID>5683</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 6 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 6</Name>
+    <PID>5684</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 7 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 7</Name>
+    <PID>5685</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>2</DataByteCount>
+    <Description>Balance rate injector 8 differs from average.</Description>
+    <FormulaString>(({0}*256+{1})-32768)/64.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Balance Rate Injector 8</Name>
+    <PID>5686</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>mm³</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>Actual turbo vane position as a percent (100% = closed, 0% = open)</Description>
+    <FormulaString>100*{0}/255.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Actual Turbo Vane Position</Name>
+    <PID>5443</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  
+  <ParameterIdentification>
+    <DataByteCount>1</DataByteCount>
+    <Description>Desired turbo vane position as a percent (100% = closed, 0% = open)</Description>
+    <FormulaString>100*{0}/255.0</FormulaString>
+    <Group>Engine</Group>
+    <Header>6C 10 F1</Header>
+    <LogThisPID>false</LogThisPID>
+    <Mode>34</Mode>
+    <Name>Desired Turbo Vane Position</Name>
+    <PID>5440</PID>
+    <PidType>GM Enhanced</PidType>
+    <Units>%</Units>
+  </ParameterIdentification>
+  
+</ArrayOfParameterIdentification>
