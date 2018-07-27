@@ -2,7 +2,7 @@
 
 [Setup]
 AppName=Link
-AppVersion=1.2017.11.24
+AppVersion=1.2018.7.26
 DefaultDirName={pf}\Link
 DefaultGroupName=Link
 UninstallDisplayIcon={app}\link.exe
