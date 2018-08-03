@@ -1,0 +1,22 @@
+* text=auto
+
+# files that should have their line endings converted at checkout
+*.c text
+*.cpp text
+*.cs text
+*.xml text
+*.json text
+*.sh text
+
+# files that should always follow the windows crlf endings
+*.sln text eol=crlf
+*.*proj text eol=crlf
+*.inf text eol=crlf
+*.bat text eol=crlf
+
+# files that are binary and should be left alone
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.bmp binary
+*.docx binary
