@@ -73,7 +73,7 @@ namespace OBD2.Cables
                 info.Description = "Turning echo off";
                 UpdateConnectionStatus(1, info, callback);
 
-                response = SendCommand(Protocols.Elm327.EchoOff);
+                response = SendCommand(Protocols.Elm327.EchoOff, 10000);
                 if (!response.Contains(Protocols.Elm327.Responses.OK))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not turn echo off");
@@ -85,7 +85,7 @@ namespace OBD2.Cables
                 UpdateConnectionStatus(2, info, callback);
 
                 Diagnostics.DiagnosticLogger.Log("Turning auto protocol on");
-                response = SendCommand(Protocols.Elm327.SetAutoProtocol);
+                response = SendCommand(Protocols.Elm327.SetAutoProtocol, 10000);
                 if (!response.Contains(Protocols.Elm327.Responses.OK))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not set protocol to Auto");
@@ -96,7 +96,7 @@ namespace OBD2.Cables
                 UpdateConnectionStatus(2, info, callback);
 
                 Diagnostics.DiagnosticLogger.Log("Forcing a search for existing protocol");
-                response = SendCommand(Protocols.Elm327.ForceProtocolSearch, 3000);
+                response = SendCommand(Protocols.Elm327.ForceProtocolSearch, 10000);
                 if (string.IsNullOrEmpty(response))
                 {
                     Diagnostics.DiagnosticLogger.Log("Could not force an auto protocol search");
@@ -105,7 +105,7 @@ namespace OBD2.Cables
                     return;
                 }
 
-                response = SendCommand(Protocols.Elm327.DisplayProtocol);
+                response = SendCommand(Protocols.Elm327.DisplayProtocol, 10000);
                 string chosenProtocol = response.Replace(Protocols.Elm327.Responses.Auto, string.Empty).Replace(",", string.Empty).Trim();
                 Diagnostics.DiagnosticLogger.Log("Protocol chosen: " + chosenProtocol);
                 if (!response.Contains(Protocols.Elm327.Responses.Auto))
@@ -113,7 +113,7 @@ namespace OBD2.Cables
                     Diagnostics.DiagnosticLogger.Log("Displayed protocol did not mention auto");
                     info.Description = "Error, displayed protocol did not mention auto";
                     UpdateConnectionStatus(2, info, callback);
-                    return;
+                    //return;
                 }
 
                 Protocol = OBD2.Protocols.NameToProtocol(chosenProtocol);
