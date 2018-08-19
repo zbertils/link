@@ -15,6 +15,7 @@ Source: "..\code\vs\link\bin\Release\link.exe"; DestDir: "{app}"
 Source: "..\code\vs\link\bin\Release\ZedGraph.dll"; DestDir: "{app}"
 Source: "..\code\vs\link\bin\Release\data\pids.xml"; DestDir: "{app}\data"
 Source: "..\code\vs\link\bin\Release\data\dtcs.ini"; DestDir: "{app}\data"
+Source: "..\code\vs\link\bin\Release\data\makes.ini"; DestDir: "{app}\data"
 Source: "..\README.md"; DestDir: "{app}"; Flags: isreadme
 
 [Icons]
