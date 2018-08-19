@@ -129,7 +129,7 @@ namespace OBD2.Cables
         /// </summary>
         /// <param name="pid"> The ParameterIdentification object to communicate to the cable. </param>
         /// <returns> The response if one is expected, and null otherwise. </returns>
-        public abstract string Communicate(ParameterIdentification pid);
+        public abstract string Communicate(ParameterIdentification pid, int timeout = 300);
 
         /// <summary>
         /// Sends the given data bytes through the cable.
@@ -150,7 +150,7 @@ namespace OBD2.Cables
         /// </summary>
         /// <param name="timeoutMilliseconds"> The timeout to use instead of the one passed through the constructor. </param>
         /// <returns> The response if one is expected, and null otherwise. </returns>
-        public abstract string Receive(int timeoutMilliseconds = 75);
+        public abstract string Receive(int timeoutMilliseconds = 300);
 
         /// <summary>
         /// Requests the PCM clears trouble codes from the vehicle.

@@ -57,7 +57,7 @@ namespace OBD2.SpecificPids
         {
             List<Tuple<DiagnosticTroubleCode, string>>  statuses = new List<Tuple<DiagnosticTroubleCode, string>>();
 
-            string response = cable.Communicate(this);
+            string response = cable.Communicate(this, 5000);
             string[] responses = ParameterIdentification.PrepareResponseString(response);
             if (responses != null)
             {

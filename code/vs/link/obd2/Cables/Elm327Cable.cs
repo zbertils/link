@@ -138,21 +138,22 @@ namespace OBD2.Cables
                 cableConnection.ReadTimeout = sleepMilliseconds;
 
                 cableConnection.WriteLine(data);
-                System.Threading.Thread.Sleep(sleepMilliseconds);
-                string response = cableConnection.ReadExisting();
+                string response = cableConnection.ReadTo(Protocols.Elm327.Prompt);
 
-                response = response.Replace(Protocols.Elm327.Prompt, string.Empty); // remove the prompt character before returning the response
+                // remove the prompt character before returning the response
+                response = response.Replace(Protocols.Elm327.Prompt, string.Empty);
                 Diagnostics.DiagnosticLogger.Log("ELM327 response: " + response);
 
                 return response;
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
+                Diagnostics.DiagnosticLogger.Log("Timeout on SendCommand(" + data + ", " + sleepMilliseconds + ")", ex);
                 return string.Empty;
             }
         }
 
-        public override string Communicate(ParameterIdentification pid)
+        public override string Communicate(ParameterIdentification pid, int timeout = 300)
         {
             // only the J1850 protocol needs to set the header,
             // CAN and others do not have the same set-header commands
@@ -196,7 +197,7 @@ namespace OBD2.Cables
                 //System.Threading.Thread.Sleep(100); // FIXME: find a better way to wait for the entire data packet than just sleeping
 
                 // if sending was successful then try to receive
-                return Receive();
+                return Receive(timeout);
             }
 
             // sending did not work, return false
@@ -272,9 +273,11 @@ namespace OBD2.Cables
         {
             List<DiagnosticTroubleCode> codes = new List<DiagnosticTroubleCode>();
 
-            // set the frame header to the default PCM for the main engine codes
-
-            //        SendCommand(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default), 1000);
+            if (Protocol == Protocols.Protocol.J1850)
+            {
+                // set the frame header to the default PCM for the main engine codes
+                SendCommand(Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default), 1000);
+            }
 
             // turn adaptive timing off so we can get all of the codes without missing them on slow responses
             SendCommand(Protocols.Elm327.AdaptiveTimingOff, 1000);
@@ -293,11 +296,27 @@ namespace OBD2.Cables
         {
             List<Tuple<DiagnosticTroubleCode, string>> statuses = new List<Tuple<DiagnosticTroubleCode, string>>();
 
-            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default);   statuses.AddRange(mode19.RequestAllDtcStatuses(this));
-            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.BCM);       statuses.AddRange(mode19.RequestAllDtcStatuses(this));
-            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.PCM);       statuses.AddRange(mode19.RequestAllDtcStatuses(this));
-            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.TCM);       statuses.AddRange(mode19.RequestAllDtcStatuses(this));
-            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.AirBag);    statuses.AddRange(mode19.RequestAllDtcStatuses(this));
+            // there needs to be a sleep after each request to allow plenty of time for the lengthy responses to come through
+
+            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.Default);
+            statuses.AddRange(mode19.RequestAllDtcStatuses(this));
+            //System.Threading.Thread.Sleep(5000);
+
+            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.BCM);
+            statuses.AddRange(mode19.RequestAllDtcStatuses(this));
+            //System.Threading.Thread.Sleep(5000);
+
+            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.PCM);
+            statuses.AddRange(mode19.RequestAllDtcStatuses(this));
+            //System.Threading.Thread.Sleep(5000);
+
+            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.TCM);
+            statuses.AddRange(mode19.RequestAllDtcStatuses(this));
+            //System.Threading.Thread.Sleep(5000);
+
+            Protocols.Elm327.SetFrameHeader(Protocols.J1850.Headers.AirBag);
+            statuses.AddRange(mode19.RequestAllDtcStatuses(this));
+            //System.Threading.Thread.Sleep(5000);
 
             return statuses;
         }
