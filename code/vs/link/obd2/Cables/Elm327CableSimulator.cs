@@ -123,7 +123,7 @@ namespace OBD2.Cables
             return Protocols.Elm327.Responses.OK;
         }
 
-        public override string Communicate(ParameterIdentification pid)
+        public override string Communicate(ParameterIdentification pid, int timeout = 300)
         {
             // check if the header needs to be set
             if (pid.Header != currentJ1850Header &&
